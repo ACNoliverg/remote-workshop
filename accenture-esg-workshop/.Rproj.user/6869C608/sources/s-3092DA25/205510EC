@@ -1,0 +1,24 @@
+{
+    "id": "205510EC",
+    "path": "C:/Workshop/accenture-esg-workshop/ui.R",
+    "project_path": "ui.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1632014563330.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "cursorPosition": "69,35",
+        "scrollLine": "42"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1632016187,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1632016187791,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,204 @@
+#
+# This is the server logic of a Shiny web application. You can run the
+# application by clicking 'Run App' above.
+#
+# Find out more about building applications with Shiny here:
+#2
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+#reactiveConsole(TRUE)
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+    
+    # 
+    observeEvent(input$nameSubmit, {
+        Sys.sleep(3)
+        resetLoadingButton("nameSubmit")
+        showToast(
+            "success",
+            paste0("Thanks ",input$username, "! Head over to '1. Current performance'")
+            )
+    })
+    
+    ##---- Server.1: Current performance
+    #------------------------------------------
+    
+    # Server.1.1 Create table
+    output$performance_choices <-
+        renderDT(
+            ambition_descriptions,
+            selection = c('single'),
+            rownames = FALSE,
+            option = list(dom = 't')
+        )
+    
+    # Server.1.2 connect submit button
+    observeEvent(input$performance_submit, {
+        Sys.sleep(1.5)
+        resetLoadingButton("performance_submit")
+        ambition_choice <-
+            get_ambition(input$performance_choices_rows_selected)
+        message(paste0(input$username, " chooses ",ambition_choice))
+        list(user = input$username,
+             datetime = lubridate::now(),
+             Performance = ambition_choice
+             ) %>%
+            data.frame() %>%
+            sheet_append(ss = performance_id)
+    })
+    
+    
+    
+    # Server.1.3 Plot
+    output$performance_plot <-
+      renderPlot({
+        ggplot( performance_responses(), aes(x = Performance, fill = Performance)) + 
+          geom_bar(stat = "count") + 
+          theme_minimal()
+      })
+    
+    
+    # Server.1.3.1 Get performance data
+    performance_responses <-
+      eventReactive(input$performance_reload, {
+        #      
+        read_sheet(ss = performance_id) %>%
+          as_tibble()
+        
+      })
+    
+    # Server.1.3.2 Reset reload button
+    observeEvent(input$performance_reload, {
+      Sys.sleep(3)
+      resetLoadingButton("performance_reload")
+    })
+    
+    
+    ##---- Server.2: Ambition
+    #------------------------------------------
+    
+    # Server.2.1 Create table
+    output$ambition_choices <-
+      renderDT(
+        ambition_descriptions,
+        selection = c('single'),
+        rownames = FALSE,
+        option = list(dom = 't')
+      )
+    
+    # Server.2.2 connect submit button
+    observeEvent(input$ambition_submit, {
+      Sys.sleep(1.5)
+      resetLoadingButton("ambition_submit")
+      ambition_choice <-
+        get_ambition(input$ambition_choices_rows_selected)
+      message(paste0(input$username, " chooses ",ambition_choice))
+      list(user = input$username,
+           datetime = lubridate::now(),
+           Ambition = ambition_choice
+      ) %>%
+        data.frame() %>%
+        sheet_append(ss = ambition_id)
+    })
+    
+    # Server.2.3 Plot
+    output$ambition_plot <-
+      renderPlot({
+        ggplot( ambition_responses(), aes(x = Ambition, fill = Ambition)) + 
+          geom_bar(stat = "count") + 
+          theme_minimal()
+      })
+    
+    
+    # Server.2.3.1 Get performance data
+    ambition_responses <-
+      eventReactive(input$ambition_reload, {
+        #      
+        read_sheet(ss = ambition_id) %>%
+          as_tibble()
+        
+      })
+    
+    # Server.2.3.2 Reset reload button
+    observeEvent(input$ambition_reload, {
+      Sys.sleep(3)
+      resetLoadingButton("ambition_reload")
+    })
+    
+     #  3 ESG Priorities
+     #------------------------------------------
+     #-----
+    # Server.3.1 Create table
+    output$prorities_choices <-
+      renderDT({
+        data <- data.frame(Choice = focus_data$Subcategory,
+                           Priority = '<select id="single_select" style="width: 100%;">
+                           <option value="" selected></option>
+                           <option value="High priority">High priority</option>
+                           <option value="Low priority">Low priority</option>
+                           <option value="Not a priority">Not a priority</option>
+                           </select>',
+                           stringsAsFactors = FALSE)
+        
+        datatable(data = data,
+                  selection = "none",
+                  escape = FALSE,
+                  rownames = FALSE, 
+                  options = 
+                    list(
+                      initComplete = JS(js)
+                    )
+        )
+      })
+    
+    # Server.1.2 connect submit button
+    observeEvent(input$prorities_submit, {
+      Sys.sleep(1.5)
+      message(output$prorities_choices)
+      resetLoadingButton("prorities_submit")
+      
+    })
+    
+    # Server.1.3 Plot
+    output$priorities_plot <-
+      renderPlot({
+        ggplot( priorities_responses(), aes(x = `ESG category`, fill = Priority)) + 
+          geom_bar(stat = "count") + 
+          theme_minimal()
+      })
+    
+    
+    # Server.1.3.1 Get performance data
+    priorities_responses <-
+      eventReactive(input$priorities_reload, {
+        #      
+        read_sheet(ss = performance_id) %>%
+          as_tibble()
+        
+      })
+    
+    # Server.1.3.2 Reset reload button
+    observeEvent(input$priorities_reload, {
+      Sys.sleep(3)
+      resetLoadingButton("performance_reload")
+    }) 
+    
+     #  4 Timeframe
+     #-----
+    
+    # Server.1.1 outcomes database
+    output$outcomes_tbl <- 
+        renderDT(
+            outcomes_data
+        )
+    
+    
+    #  4 Timeframe
+    #------------------------------------------
+})
+    
+    
+    
+#rsconnect::deployApp(account = 'acn-strategy')

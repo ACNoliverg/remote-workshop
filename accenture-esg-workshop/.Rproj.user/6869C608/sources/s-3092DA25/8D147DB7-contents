@@ -1,0 +1,171 @@
+#
+# This is the server logic of a Shiny web application. You can run the
+# application by clicking 'Run App' above.
+#
+# Find out more about building applications with Shiny here:
+#2
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+#reactiveConsole(TRUE)
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+    
+    # 
+    observeEvent(input$nameSubmit, {
+        Sys.sleep(3)
+        resetLoadingButton("nameSubmit")
+        showToast(
+            "success",
+            paste0("thanks ",input$username, " - head over to 1. Current performance")
+            )
+    })
+    
+    ##---- Server.1: Current performance
+    #
+    
+    # Server.1.1 Create table
+    output$performance_choices <-
+        renderDT(
+            ambition_descriptions,
+            selection = c('single'),
+            rownames = FALSE,
+            option = list(dom = 't')
+        )
+    
+    # Server.1.2 connect submit button
+    
+    observeEvent(input$performance_submit, {
+        Sys.sleep(3)
+        resetLoadingButton("performance_submit")
+        ambition_choice <-
+            get_ambition(input$performance_choices_rows_selected)
+        message(paste0(input$username, " chooses ",ambition_choice))
+        list(user = input$username,
+             choice = ambition_choice,
+             time = lubridate::now()) %>%
+            data.frame() %>%
+            sheet_append(ss = performance_id)
+    })
+    
+    # Server.1.1
+    performance_choice <- eventReactive(input$current_performance_submit, {
+        ambition_descriptions$Ambition[input$current_performance_options_last_row_clicked]
+    })
+        
+    
+    # observeEvent(input$current_performance_submit,{
+    #     message(input$current_performance_options_last_row_clicked )
+         #sheet_append(ss = current_performance_id,
+         #             data = data.frame(username(), performance_choice() ))
+     #})
+    
+     
+     performance_responses <-
+         eventReactive(input$reload_performance, {
+   #      
+             read_sheet(ss = current_performance_id)
+     })
+    
+    # Server.1.1 outcomes database
+    output$outcomes_tbl <- 
+        renderDT(
+            outcomes_data
+        )
+    
+    
+    
+    # Server.1.2 decisions framework
+    output$decisions_framework_tbl <- 
+        renderDT(
+            decision_framework
+        )
+    
+    # Server.1.3 ambition form table
+    output$ambition_description_tbl <-
+        renderDT(
+            ambition_descriptions,
+            selection = c('single'),
+            rownames = FALSE,
+            option = list(dom = 't')
+        )
+    
+    ## Server.2: Input forms [ (1) view on current status (2)  Desired future status (3) Priority ESG subcategories (4) Time frame ] 
+    
+    # Server.2.1 Enable reaativity of ambition form
+    
+    # Server.2.2 
+    
+    
+    # TODO: 
+    output$selected_ambition <- 
+        renderText(input$ambition_description_tbl_row_selected)
+    
+    # TODO chart summarising the 
+    output$ambition_choices_plot <- 
+        renderPlot({
+                ggplot() + 
+                aes(x = "Choice", y = "Number") + 
+                theme_minimal()
+            })
+    
+    
+    output$focus_tbl <-
+        renderDT({
+            data <- 
+                focus_data %>% select(ESG, Subcategory, Description, Priority)
+            
+            datatable(data = data,
+                      selection = "none",
+                      escape = FALSE,
+                      rownames = F,
+                      options = 
+                          list(
+                              initComplete = JS(js),
+                              dom = 'T'
+                              )
+                      )
+            })
+        
+    output$focus_selection <- 
+        renderDT({
+            data <- data.frame(Choice = focus_data$Subcategory,
+                               Priority = '<select id="single_select" style="width: 100%;">
+                           <option value="" selected></option>
+                           <option value="High priority">High priority</option>
+                           <option value="Low priority">Low priority</option>
+                           <option value="Not a priority">Not a priority</option>
+                           </select>',
+                               stringsAsFactors = FALSE)
+            
+            datatable(data = data,
+                      selection = "none",
+                      escape = FALSE,
+                      rownames = FALSE, 
+                      options = 
+                          list(
+                              initComplete = JS(js)
+                              )
+                      )
+            })
+    
+    output$priority_choices_plot <- 
+        renderPlot({
+            ggplot()
+                + aes(x = "Choice", y = "Number")
+                + theme_minimal()
+    })
+    
+    output$timeframe_choices_plot <- 
+        renderPlot({
+            ggplot() 
+                + aes(x = "Choice", y = "Number") 
+                + theme_minimal()
+            })
+
+        
+    })
+
+#rsconnect::deployApp(account = 'acn-strategy', appDir = 'test-app/')
+  

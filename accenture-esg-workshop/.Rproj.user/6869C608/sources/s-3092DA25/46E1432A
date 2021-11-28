@@ -1,0 +1,24 @@
+{
+    "id": "46E1432A",
+    "path": "C:/Workshop/accenture-esg-workshop/server.R",
+    "project_path": "server.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1632014541065.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "cursorPosition": "154,4",
+        "scrollLine": "133"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1631877290,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1631877290,
+    "read_only": false,
+    "read_only_alternatives": []
+}

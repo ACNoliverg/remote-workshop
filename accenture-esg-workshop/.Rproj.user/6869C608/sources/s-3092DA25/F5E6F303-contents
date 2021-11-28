@@ -1,0 +1,92 @@
+#
+# This is the user-interface definition of a Shiny web application. You can
+# run the application by clicking 'Run App' above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+
+# Define UI for application that draws a histogram
+shinyUI(fluidPage(
+    
+    useShinyFeedback(TRUE),
+    
+    theme = shinytheme("sandstone"),
+    
+    
+    # Application title
+    titlePanel("Accenture ESG Workshop"),
+
+    # Sidebar with a slider input for number of bins
+    tabsetPanel(
+
+        tabPanel(title = "Welcome!",
+                 titlePanel("Thank you for joining our workshop."),
+                 textInput("username", "Please enter your name"),
+                 loadingButton(inputId = 'nameSubmit',
+                               label = "Submit",
+                               loadingLabel = 'Submitting...')
+                 ),
+        
+        tabPanel(title = "1. Current performance",
+                 titlePanel("Where do you think you are currently performing?"),
+                 loadingButton("performance_submit", "Submit choice"),
+                 DTOutput('performance_choices')
+                 ),
+        
+        #TODO: Reactive UI that highlights & asks if you want to be X
+        tabPanel(title = "2. Ambition",
+                 titlePanel("Who do you want to be?"),
+                 DTOutput('ambition_tag'),
+                 loadingButton("ambition_", "I've decided"),
+                 textOutput(outputId = "selected_ambition")),
+        
+        tabPanel(title = "2. ESG Priorities",
+                 titlePanel("Where do your priorities lie?"),
+                 DTOutput("focus_tbl")
+                 ),
+        
+        tabPanel(title = '3. Timeframe',
+                 titlePanel("What is your timeframe?")
+                 ),
+        
+        #Show a plot of the generated distribution
+        tabPanel(title = "Choices",
+                 titlePanel("Choose which input aggregates to investigate"),
+
+                 tabsetPanel(
+
+                     tabPanel(title = "Current Performance",
+                              loadingButton("performance_reload", "reload")#,
+                              #plotOutput("performance_plot")
+                              ),
+
+                     tabPanel(title = "Our Ambitions",
+                              loadingButton("ambitions_reload", "reload")#,
+                              #plotOutput("ambitions_plot")
+                              ),
+
+                     tabPanel(title = "ESG Priorities",
+                              loadingButton("priorities_reload", "reload")#,
+                              #plotOutput("priorities_plot")
+                              ),
+
+                     tabPanel(title = "Top initiatives",
+                              loadingButton("topInitiaves_reload", "reload")#,
+                              #plotOutput("performance_plot")
+                              )
+                     )
+                 ),
+            
+        tabPanel(title = "Outcomes",
+                 DTOutput('outcomes_tbl')
+        )
+        
+        )
+    )
+)
+    
+
