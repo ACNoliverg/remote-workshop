@@ -2,7 +2,20 @@ library(shiny)
 library(ggplot2)
 library(thematic)
 
-#--- Module
+#--- Load all sub-modules with purrr
+library(purrr)
+paste0(
+  "mod_11",
+  c(
+    "1_current_state",
+    "2_future_state",
+    "3_compare"
+  ),
+  ".R"
+) %>% purrr::walk(source)
+
+#   1. UI
+# ------------
 
 ambition_UI <- function(id) {
   # Create the namespace for the module
@@ -26,58 +39,18 @@ ambition_UI <- function(id) {
 # Similarly the module server will be a composition of analogous
 # sub-modules servers
 ambition_Server <- function(id) {
-  
   current_state_Server("current_state")
   future_state_Server("future_state")
   compare_states("compare")
-  
+
 }
-# 
-# 
-# 
-# #- NS(id)
-#   
-#   currentStateTab <- tabPanel()
-#   
-#   tabs <- tabsetPanel(type="pills",
-#                       tabPanel(ns("current_state_tab"),
-#                                plotOutput())
-#   
-#   tagList(
-#     sidebarLayout(
-#       sidebarPanel(
-#         # perh
-#       ),
-#       mainPanel(
-#         
-#       )
-#     )
-#   )
-# }
-# mod_11_ambition_Server <- function(id) {
-#   moduleServer(id, function(input, output, session) {
-#     
-#     output$current_state_plot <- renderPlot(
-#       ggplot(ambition_dummy_raw, aes(y = Ambition, x = nVotesCurrent,
-#                                      fill = Ambition)
-#       ) +
-#         geom_bar(stat="identity") +
-#         theme_minimal() +
-#         ggtitle("Current performance")
-#     )
-#   })
-# }
-# mod_11_ambition_App <- function(id) {
-#   
-#   ui <- fluidPage(
-#     mod_11_ambition_UI(id)
-#     )
-#   
-#   server <- mod_11_ambition_Server(id)
-#   
-#   
-#   shinyApp(ui, server)
-# }
-
-
-  
+# Put together for testing purposes
+ambition_App <- function() {
+  ui <- fluidPage(
+    ambition_UI("test")
+  )
+  server <- function(input, output, session) {
+    ambition_Server("test")
+  }
+  shinyApp(ui, server)
+}
