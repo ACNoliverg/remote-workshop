@@ -1,0 +1,11 @@
+name: static-output-app
+title: static-output-app
+username:
+account: acn-strategy
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5228249
+bundleId: 5308403
+url: https://acn-strategy.shinyapps.io/static-output-app/
+when: 1638253937.05732
+lastSyncTime: 1638253937.05732
