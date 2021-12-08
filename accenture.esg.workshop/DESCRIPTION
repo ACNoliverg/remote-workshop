@@ -1,0 +1,35 @@
+Package: accenture.esg.workshop
+Title: Remote ESG Workshop Facilitation Tool
+Version: 0.0.0.9000
+Authors@R: person('Oliver', 'Alexander', email = 'oliver.g.alexander@accenture.com', role = c('cre', 'aut'))
+Description: Allows for the facilitator (an employee of Accenture) to open a new
+          Workshop instance, which participants access vs an endpoint hosted via 
+          shinyapps.io.
+License: file LICENSE
+Imports: 
+    config (>= 0.3.1),
+    dbplyr,
+    dplyr,
+    fakir (>= 0.2.0.9000),
+    golem (>= 0.3.1),
+    pkgload,
+    pool,
+    processx,
+    reactlog,
+    semantic.dashboard,
+    shinipsum,
+    shiny (>= 1.7.1),
+    shiny.semantic
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.2
+Suggests: 
+    covr,
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Language: en-US
+Remotes: 
+    https://github.com/ThinkR-open/fakir
+URL: https://github.com/ACNoliverg/remote-workshop
+BugReports: https://github.com/ACNoliverg/remote-workshop/issues
