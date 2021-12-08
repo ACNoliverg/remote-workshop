@@ -14,7 +14,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic 
     dashboardPage(
-      dashboardHeader(color = "purple", title = "End to End", inverted = TRUE,
+      dashboardHeader(color = "purple", title = "ESG", inverted = TRUE,
                       dropdownMenu(type = "notifications",
                                     taskItem("Projet progress...", 50.777, color = "red"))),
       dashboardSidebar(
@@ -29,10 +29,9 @@ app_ui <- function(request) {
           shiny::actionButton("browser", "browser"),
           tags$script("$('#browser').hide();"),
           shiny::h5("test"),
-          shiny::img(src = paste0("v1_workflow.PNG")))
+          mod_main_ui("main_ui_1"))),
       )
     )
-  )
 }
 #' Add external Resources to the Application
 #' 
