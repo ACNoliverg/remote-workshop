@@ -11,15 +11,7 @@
 mod_strategy_ui <- function(id){
   ns <- NS(id)
   tagList(
-    shiny::navbarPage("nabvbar!",
-               shiny::tabPanel("Ambition",
-                        mod_ambition_ui("ambition")
-                        ),
-               shiny:tabPanel("Prorities",
-                              mod_priorities_ui("priorities")),
-               shiny::tabPanel("Timeframes",
-                               mod_timeframe_ui("timeframe"))
-               )
+    uiOutput("")
   )
 }
     
@@ -28,13 +20,28 @@ mod_strategy_ui <- function(id){
 #' @noRd 
 #' 
 mod_strategy <- function(id){
-  #ns <- session$
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    mod_ambition_ui("ambition_ui_1")
-    mod_ambition_ui("priorities_ui_1")
-    mod_ambition_ui("timeframe_ui_1")
+    plotObj <- 
+      shinipsum::random_ggplot(type = "ribbon")
+    
+    dtObj <- 
+      shinipsum::random_DT(nrow = 10, ncol = 5)
+    
+    # Q: is renderUI trying to build the whole page?
+    output$page_ui <- renderUI({
+      semanticPage(
+        split_layout(cell_widths = c("50%", "50%"),
+          plotOutput(plotObj),
+          DTOutput(dtObj)
+        )
+      )
+      
+    })
+    #mod_ambition_ui("ambition_ui_1")
+    #mod_ambition_ui("priorities_ui_1")
+    #mod_ambition_ui("timeframe_ui_1")
   })
 }
     
