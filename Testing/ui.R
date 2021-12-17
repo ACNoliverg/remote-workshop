@@ -6,16 +6,13 @@ ui <- fluidPage(
     tabPanel(title = "Current Performance",
              ## 1.1 Title ----
              titlePanel("Where do you think you are currently performing?"),
-             ## 1.2 Submit ----
-             actionButton("performance_submit", "Submit"),
-             ## 1.3 DT ----
+             ## 1.2 Current performance selection table ----
              DTOutput("performance_table")),
     # 2 Ambition panel ----
     tabPanel("Ambition",
+             ## 2.1 Title ----
              titlePanel("Where do you want to be?"),
-             ## 2.1 submit ----
-             actionButton("submit_ambition", "Submit"),
-             ## 2.2 DT ----
+             ## 2.2 Ambition level selection table ----
              DTOutput("ambition_table")),
     # 3 Priorities panel ----
     tabPanel("Priorities",
