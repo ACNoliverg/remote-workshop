@@ -55,18 +55,18 @@ initiatives_db <-
 #googlesheets4::gs4_deauth()
 ## Set values in options ----
 
-googledrive::drive_deauth()
 googledrive::drive_auth(email = "acn.oliver.g.alexander@gmail.com",
                         cache = ".secrets")
 
 googlesheets_name <- paste0(lubridate::today()," Test Sheet")
 
-googlesheets4::gs4_create(name = googlesheets_name,
-                          sheets = c("Participants", "Ambition", "Subcategories",
-                                     "Opportunities"))
+# NOTE: I think the sheet should be created beforehand
+# googlesheets4::gs4_create(name = googlesheets_name,
+#                           sheets = c("Participants", "Ambition", "Subcategories",
+#                                      "Opportunities"))
 
-
-sheet_dribble <- drive_get(googlesheets_name)
-
-sheet_id <- as_sheets_id(sheet_dribble)
-sheet_id
+# 
+# sheet_dribble <- drive_get(googlesheets_name)
+# 
+# sheet_id <- as_sheets_id(sheet_dribble)
+# sheet_id
