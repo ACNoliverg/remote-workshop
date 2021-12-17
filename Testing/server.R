@@ -153,24 +153,20 @@ server <- function(input, output, session) {
   ## 2.2 Group inputs ----
   
   # 3 Refinement ----
-  ## 3.1 User relevant subcategories ----
+  ## 3.1 {Reactive} User relevant subcategories ----
   relevant_subcategories <- reactive({
     priority_and_timeframe_table() |>
       filter(Priority != "Not a priority") %>%
       pluck("Subcategory")
   })
-  ## 3.2 
- 
-  output$strategy_text_sum <- renderText("Hi")
-  
-  
-  #----- Opportunity Selection
+  ## 3.2 {Reactive} Opportunities list ----
   filtered_ops <- reactive({
     ops_data <- opportunities_db
     
     ops_data |>
       filter(Subcategory %in% relevant_subcategories())
   })
+  ## 3.3 Render opportunities selection table ----
   output$opportunities_table <- DT::renderDT(
     {
       data_selected <- filtered_ops()
@@ -197,6 +193,7 @@ server <- function(input, output, session) {
       )
       
     }, server = FALSE)
+  ## 3.4 {Reactive} Refined user inputs ----
   final_inputs <- reactive({
     dat <- filtered_ops() 
     #--- should really should just join with the 
@@ -205,15 +202,17 @@ server <- function(input, output, session) {
       left_join(priority_and_timeframe_table(),
                 by = c("ESG", "Subcategory"))
   })
-  
-  
+  # 4 Outcomes ----
+  ## 4.1 {eventReactive} generate outcomes data ----
   outcomes_data <- eventReactive(input$load_outcomes,{
-    dat <- initiatives_db
-    
+    dat <- 
+      initiatives_db
     #-- filter for ambition
-    dat |> filter(Ambition == user_ambition()) -> dat
+    dat |>
+      filter(Ambition == user_ambition()) -> dat
     #-- filter-
-    dat |> select(ESG, Subcategory, Timeframe, Opportunity,
+    dat |>
+      select(ESG, Subcategory, Timeframe, Opportunity,
                   Year, cost, value, net) -> to_join
     
     to_join |>
@@ -226,10 +225,11 @@ server <- function(input, output, session) {
     return(out)
     
   })
+  ## 4.2 Render outcomes DT ----
   output$dt_out <- renderDT({
     datatable(outcomes_data())
   })
-  
+  ## 4.3 Render outcomes plot ----
   output$plot_out <- renderEcharts4r({
     outcomes_data() |>
       group_by(ESG, Year) |>
