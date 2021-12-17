@@ -16,10 +16,9 @@ ui <- fluidPage(
              DTOutput("ambition_table")),
     # 3 Priorities panel ----
     tabPanel("Priorities",
+             ## 3.1 Title
              titlePanel("Choose your priorities"),
-             ## 3.1 Submit button ----
-             actionButton("submit_priorities", "Submit"),
-             ## 3.2 DT ----
+             ## 3.2 Subcategory priority selection table ----
              DTOutput("priorities_table"),
              ## 3.3 (for debug) HTML ----
              htmlOutput("priority_text")
