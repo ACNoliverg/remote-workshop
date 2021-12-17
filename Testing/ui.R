@@ -1,5 +1,3 @@
-
-
 ui <- fluidPage(
   tabsetPanel(
     # 1 Performance panel ----
@@ -28,8 +26,6 @@ ui <- fluidPage(
     tabPanel("Timeframe",
              ## 4.1 Title ----
              titlePanel("Whats the timeframe?"),
-             ## 4.2 Submit button ----
-             actionButton("submit_timeframe", "Submit"),
              ## 4.3 DT ----
              DTOutput("timeframe_table"),
              ## 4.4 (for debug) HTML selection text ----
