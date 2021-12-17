@@ -1,48 +1,10 @@
 server <- function(input, output, session) {
   
-  userInputs <- reactiveValues(in_performance = NULL,
-                               in_ambition = NULL,
-                               in_priorities = NULL,
-                               in_timefame = NULL,
-                               in_top_5 = NULL,
-                               combined_table = NULL)
-  
-  
-  #-----
-  observeEvent(input$submit_performance, {
-    userInputs$in_performance <- priorities_data |>
-      mutate(priority = map_chr())
-  }) 
-  observeEvent(input$submit_ambition, {
-    userInputs$in_ambition <- input$ambition()
-  })
-  observeEvent(input$submit_priorites, {
-    userInputs$inpriorities <- input$priorities()
-    
-    # mutate(Priorities = map(1:nrow, ~input[[paste0]]))
-  })
-  observeEvent(input$submit_timeframe, {
-    userInputs$timeframe <- input$timeframe() 
-    
-    userInputs$combined_table <-
-      tibble(Subcategory = esg_subcategories, 
-             userInputs$timeframe())
-  })
-  observeEvent(input$submit_top_5, {
-    userInputs$in_top_5 <- input$top_5()
-  })
-  
   #---------- Tables
   #--
-  #----- Strategy inputs
-  
-  output$ambition_table <-
-    renderDT({datatable(
-      ambition_descriptions,
-      selection = c('single'),
-      rownames = FALSE,
-      options = list(dom = 't'))
-    })
+  # 1 Strategy inputs ----
+  ## 1.1 Performance ----
+  ### 1.1.1 Selection table ----
   output$performance_table <- 
     renderDT({
       datatable(
@@ -51,6 +13,19 @@ server <- function(input, output, session) {
         rownames = FALSE,
         options = list(dom = "t")
       )})
+
+  ## 1.2 Ambition  ----
+  ### 1.2.1 Selection table ----
+  output$ambition_table <-
+    renderDT({datatable(
+      ambition_descriptions,
+      selection = c('single'),
+      rownames = FALSE,
+      options = list(dom = 't'))
+    })
+  
+  ## 1.3 Priorities ----
+  ### 1.3.1 Selection table ----
   output$priorities_table <-
     DT::renderDT(
       {
@@ -81,6 +56,7 @@ server <- function(input, output, session) {
         )
         
       }, server = FALSE)
+  ### 1.3.2 (For debug) Priority text ----
   output$priority_text <- renderUI({
     purrr::map(.x = 1:nrow(priorities_data),
                .f = ~paste0("Priority ",as.character(.x)," is:", 
@@ -89,7 +65,8 @@ server <- function(input, output, session) {
       paste(sep = '<br>') |>
       HTML()
   })
-  
+  ## 1.4 Timeframe ----
+  ### 1.4.1 Selection table ----
   output$timeframe_table <-
     DT::renderDT(
       {
@@ -118,6 +95,7 @@ server <- function(input, output, session) {
         )
         
       }, server = FALSE)
+  ### 1.4.2 (For debug) timeframe text ----
   output$timeframe_text <- renderUI({
     purrr::map(.x = 1:nrow(priorities_data),
                .f = ~paste0("Timeframe ",as.character(.x)," is:", 
@@ -128,17 +106,26 @@ server <- function(input, output, session) {
   })
   
   
-  #----- Strategy Outputs
+  # 2 Strategy outputs ----
+  ## 2.1 Users inputs ----
+  ### 2.1.1 Performance ----
+  ##### create reactive ----
   user_performance <- reactive({
     get_ambition(input$performance_table_rows_selected)
   })
+  ##### text output ----
+  output$performance_out_text <- 
+    renderText({paste0("Performance: ",user_performance())})
+  ### 2.1.2 Ambition ----
+  #### Reactive ambition ----
   user_ambition <- reactive({
     get_ambition(input$ambition_table_rows_selected)
   })
-  output$performance_out_text <- 
-    renderText({paste0("Performance: ",user_performance())})
+  #### text output
   output$ambition_out_text <-
     renderText({paste0("Ambition: ", user_ambition())})
+  ### 2.1.3 Priorities and timeframes ----
+  ##### Reactive priorites & timeframes table ----
   priority_and_timeframe_table <- reactive({
     data_out <- priorities_data |> select(-Description)
     
@@ -150,19 +137,9 @@ server <- function(input, output, session) {
       rename(ESG = `ESG Category`) -> data_out
     return(data_out)
   })
-  relevant_subcategories <- reactive({
-    priority_and_timeframe_table() |>
-      filter(Priority != "Not a priority") %>%
-      pluck("Subcategory")
-  })
+  ##### Render table UI component
   output$priority_timeframe_out <- renderDT({
-    # data_out <- priorities_data |> select(-Description)
-    # 
-    # data_out$Priority = map_chr(1:nrow(priorities_data),
-    #                            ~input[[paste0("Priority_", as.character(.x))]])
-    # data_out$Timeframe = map_chr(1:nrow(priorities_data),
-    #                            ~input[[paste0("Timeframe_", as.character(.x))]])
-    # 
+    
     datatable(
       data = priority_and_timeframe_table(),
       selection = "none",
@@ -171,6 +148,19 @@ server <- function(input, output, session) {
     )
     
   })
+  ### 2.1.4 Produce output chart ----
+  ### 2.1.5 Submit to database ----
+  ## 2.2 Group inputs ----
+  
+  # 3 Refinement ----
+  ## 3.1 User relevant subcategories ----
+  relevant_subcategories <- reactive({
+    priority_and_timeframe_table() |>
+      filter(Priority != "Not a priority") %>%
+      pluck("Subcategory")
+  })
+  ## 3.2 
+ 
   output$strategy_text_sum <- renderText("Hi")
   
   
