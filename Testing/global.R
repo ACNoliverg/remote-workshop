@@ -17,7 +17,7 @@ get_ambition <-
     ambition_descriptions$Ambition[index]
   }
 priorities_data <- 
-  vroom::vroom("data/where-to-focus-v3.csv")
+  vroom::vroom("data/where-to-focus-v4.csv")
 # initiatives_db |>
 #   distinct(ESG, Subcategory, Opportunity) -> ops
 # ops |>
