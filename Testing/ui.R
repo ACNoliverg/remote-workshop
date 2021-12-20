@@ -14,23 +14,23 @@ ui <- fluidPage(
              )
           ),
     # 1 Performance panel ----
-    tabPanel(title = "Current Performance",
+    tabPanel(title = "Current ESG Performance",
              ## 1.1 Title ----
-             titlePanel("Where do you think you are currently performing?"),
+             titlePanel("Choose the level of ambition that best reflects your current performance on sustainability"),
              textOutput("performance_info"),
              ## 1.2 Current performance selection table ----
              DTOutput("performance_table")),
     # 2 Ambition panel ----
     tabPanel("Ambition",
              ## 2.1 Title ----
-             titlePanel("Where do you want to be?"),
+             titlePanel("Choose the level of ambition that you think you should strive for in your sustainability strategy"),
              textOutput("ambition_info"),
              ## 2.2 Ambition level selection table ----
              DTOutput("ambition_table")),
     # 3 Priorities panel ----
     tabPanel("Priorities",
              ## 3.1 Title
-             titlePanel("Choose your priorities"),
+             titlePanel("Select between high, low and not a priority for each ESG-subcategory from the drop down lists"),
              textOutput("priorities_info"),
              ## 3.2 Subcategory priority selection table ----
              DTOutput("priorities_table")#,
@@ -41,7 +41,7 @@ ui <- fluidPage(
     # 4 Timeframe panel ----
     tabPanel("Timeframe",
              ## 4.1 Title ----
-             titlePanel("Whats the timeframe?"),
+             titlePanel("For each sub-category, select the timeframe you wish to achieve your ambition in from the drop-down box"),
              textOutput("timeframe_info"),
              ## 4.3 DT ----
              DTOutput("timeframe_table")#,
@@ -51,7 +51,7 @@ ui <- fluidPage(
     # 5 Strategy input summary panel ----
     tabPanel("Strategy Outputs",
              ## 5.1 Title ----
-             titlePanel("Here's the results"),
+             titlePanel("Confirm your selection"),
              textOutput("inputs_tab_info"),
              ## 5.2 Ambition and performance text ----
              textOutput("performance_out_text"),
@@ -61,7 +61,7 @@ ui <- fluidPage(
     # 6 Opportunity selection panel ----
     tabPanel("Top initiatives",
              ## 6.1 Title ----
-             titlePanel("Refine the opportunity"),
+             titlePanel("Please select the five most important initiatives in each of the environmental, social and governance spaces (so 15 initiatives in total). Note the subcategories you can see here are those that you selected as either high or low priority"),
              textOutput("initiatives_info"),
              ## 6.2 DT ----
              DTOutput("opportunities_table")),
