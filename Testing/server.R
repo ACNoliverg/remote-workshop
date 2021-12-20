@@ -86,6 +86,10 @@ server <- function(input, output, session) {
   
   ## 1.4 Timeframe ----
   ### 1.4.1 Selection table ----
+  output$timeframe_info <- renderText({
+    "Select your desired timeframe for each subcategory (one for each row of the table)"
+    
+  })
   output$timeframe_table <-
     DT::renderDT(
       {
@@ -123,8 +127,6 @@ server <- function(input, output, session) {
       paste(sep = '<br>') |>
       HTML()
   })
-  
-  
   
   
   # 2 Strategy outputs ----

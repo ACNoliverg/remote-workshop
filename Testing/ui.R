@@ -42,6 +42,7 @@ ui <- fluidPage(
     tabPanel("Timeframe",
              ## 4.1 Title ----
              titlePanel("Whats the timeframe?"),
+             textOutput("timeframe_info"),
              ## 4.3 DT ----
              DTOutput("timeframe_table"),
              ## 4.4 (for debug) HTML selection text ----
