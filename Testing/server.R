@@ -131,6 +131,9 @@ server <- function(input, output, session) {
   
   # 2 Strategy outputs ----
   ## 2.1 Users inputs ----
+  output$inputs_tab_info <- renderText({
+    "Confirm that the below inputs are correct"
+  })
   ### 2.1.1 Performance ----
   ##### create reactive ----
   user_performance <- reactive({

@@ -51,6 +51,7 @@ ui <- fluidPage(
     tabPanel("Strategy Outputs",
              ## 5.1 Title ----
              titlePanel("Here's the results"),
+             textOutput("inputs_tab_info"),
              ## 5.2 Ambition and performance text ----
              textOutput("performance_out_text"),
              textOutput("ambition_out_text"),
