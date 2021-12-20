@@ -10,7 +10,7 @@ library(googledrive)
 
 #------ Loading data -------
 ambition_descriptions <- 
-  vroom::vroom("data/ambition_descriptions_v2.csv",
+  vroom::vroom("data/ambition_descriptions_v3.csv",
                col_select = c(Ambition, Description, Who, Example))
 get_ambition <-
   function(index) {
