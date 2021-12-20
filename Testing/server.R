@@ -35,7 +35,9 @@ server <- function(input, output, session) {
       rownames = FALSE,
       options = list(dom = 't'))
     })
-  
+  output$ambition_info <- renderText({
+    "Click to select the appropriate row"
+  })
   
   ## 1.3 Priorities ----
   ### 1.3.1 Selection table ----

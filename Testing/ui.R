@@ -24,6 +24,7 @@ ui <- fluidPage(
     tabPanel("Ambition",
              ## 2.1 Title ----
              titlePanel("Where do you want to be?"),
+             textOutput("ambition_info"),
              ## 2.2 Ambition level selection table ----
              DTOutput("ambition_table")),
     # 3 Priorities panel ----
