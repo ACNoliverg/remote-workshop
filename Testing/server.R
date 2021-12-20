@@ -1,7 +1,5 @@
 server <- function(input, output, session) {
   
-  #---------- Tables
-  #--
   # 1 Strategy inputs ----
   ## 1.1 Performance ----
   ### 1.1.1 Selection table ----
@@ -14,6 +12,7 @@ server <- function(input, output, session) {
         options = list(dom = "t")
       )})
 
+  
   ## 1.2 Ambition  ----
   ### 1.2.1 Selection table ----
   output$ambition_table <-
@@ -23,6 +22,7 @@ server <- function(input, output, session) {
       rownames = FALSE,
       options = list(dom = 't'))
     })
+  
   
   ## 1.3 Priorities ----
   ### 1.3.1 Selection table ----
@@ -65,6 +65,7 @@ server <- function(input, output, session) {
       paste(sep = '<br>') |>
       HTML()
   })
+  
   ## 1.4 Timeframe ----
   ### 1.4.1 Selection table ----
   output$timeframe_table <-
@@ -106,6 +107,8 @@ server <- function(input, output, session) {
   })
   
   
+  
+  
   # 2 Strategy outputs ----
   ## 2.1 Users inputs ----
   ### 2.1.1 Performance ----
@@ -116,14 +119,16 @@ server <- function(input, output, session) {
   ##### text output ----
   output$performance_out_text <- 
     renderText({paste0("Performance: ",user_performance())})
+  
   ### 2.1.2 Ambition ----
   #### Reactive ambition ----
   user_ambition <- reactive({
     get_ambition(input$ambition_table_rows_selected)
   })
-  #### text output
+  #### text output ----
   output$ambition_out_text <-
     renderText({paste0("Ambition: ", user_ambition())})
+  
   ### 2.1.3 Priorities and timeframes ----
   ##### Reactive priorites & timeframes table ----
   priority_and_timeframe_table <- reactive({
@@ -137,7 +142,7 @@ server <- function(input, output, session) {
       rename(ESG = `ESG Category`) -> data_out
     return(data_out)
   })
-  ##### Render table UI component
+  ##### Render table UI component ----
   output$priority_timeframe_out <- renderDT({
     
     datatable(
@@ -148,9 +153,13 @@ server <- function(input, output, session) {
     )
     
   })
+  
   ### 2.1.4 Produce output chart ----
+  
   ### 2.1.5 Submit to database ----
+  
   ## 2.2 Group inputs ----
+  
   
   # 3 Refinement ----
   ## 3.1 {Reactive} User relevant subcategories ----
@@ -159,6 +168,7 @@ server <- function(input, output, session) {
       filter(Priority != "Not a priority") %>%
       pluck("Subcategory")
   })
+  
   ## 3.2 {Reactive} Opportunities list ----
   filtered_ops <- reactive({
     ops_data <- opportunities_db
@@ -166,6 +176,7 @@ server <- function(input, output, session) {
     ops_data |>
       filter(Subcategory %in% relevant_subcategories())
   })
+  
   ## 3.3 Render opportunities selection table ----
   output$opportunities_table <- DT::renderDT(
     {
@@ -193,15 +204,18 @@ server <- function(input, output, session) {
       )
       
     }, server = FALSE)
+  
   ## 3.4 {Reactive} Refined user inputs ----
   final_inputs <- reactive({
     dat <- filtered_ops() 
-    #--- should really should just join with the 
-    #--- timeframe_priorites_table
+    # should really should just join with the 
+    # timeframe_priorites_table
     dat |>
       left_join(priority_and_timeframe_table(),
                 by = c("ESG", "Subcategory"))
   })
+  
+  
   # 4 Outcomes ----
   ## 4.1 {eventReactive} generate outcomes data ----
   outcomes_data <- eventReactive(input$load_outcomes,{
@@ -225,10 +239,12 @@ server <- function(input, output, session) {
     return(out)
     
   })
+  
   ## 4.2 Render outcomes DT ----
   output$dt_out <- renderDT({
     datatable(outcomes_data())
   })
+  
   ## 4.3 Render outcomes plot ----
   output$plot_out <- renderEcharts4r({
     outcomes_data() |>
