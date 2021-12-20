@@ -28,6 +28,9 @@ opportunities_db <- readRDS("data/opporunity_db.RData")
 initiatives_db <-
   vroom::vroom("data/initiatives_db_long.csv")
 
+# Landing ----
+welcome_text <- "This spreadsheet allows client participants to create and workshop their own sustainability strategy. Participants shape their strategy by choosing their level of ambition, priority areas and timeframe for their strategy. This generates a list of initiatives along with an indicative cost for implementing these initiatives. Each participant in the workshop should have their own version of the file which links each participant's results to a summary spreadsheet where the group can see whether their level of ambition, priority, timeframe and costs are aligned or not."
+
 # Google sheets setup ----
 ## Generating token ----
 ### Designate the cache location ---- 

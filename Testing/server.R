@@ -1,5 +1,16 @@
 server <- function(input, output, session) {
   
+  # 0 Landing page ----
+  username <- reactive({
+    input$username
+  })
+  output$current_username <- renderText({
+    paste0("Current username is: ",
+           username())
+  })
+  output$workshop_info <- renderText({
+    welcome_text
+  })
   # 1 Strategy inputs ----
   ## 1.1 Performance ----
   ### 1.1.1 Selection table ----

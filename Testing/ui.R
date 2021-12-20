@@ -1,5 +1,18 @@
 ui <- fluidPage(
   tabsetPanel(
+    # 0 Landing page ----
+    tabPanel(title = "Information",
+             br(),
+             sidebarLayout(
+               sidebarPanel(
+                 textInput("username", "Enter your name"),
+                 textOutput("current_username")
+               ),
+               mainPanel(
+                 textOutput("workshop_info")
+               )
+             )
+          ),
     # 1 Performance panel ----
     tabPanel(title = "Current Performance",
              ## 1.1 Title ----
