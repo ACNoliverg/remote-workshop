@@ -40,6 +40,9 @@ server <- function(input, output, session) {
   })
   
   ## 1.3 Priorities ----
+  output$priorities_info <- renderText({
+    "Select your priority level for each subcategory (one for each row of the table)"
+  })
   ### 1.3.1 Selection table ----
   output$priorities_table <-
     DT::renderDT(

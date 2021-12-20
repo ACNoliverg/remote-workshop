@@ -31,6 +31,7 @@ ui <- fluidPage(
     tabPanel("Priorities",
              ## 3.1 Title
              titlePanel("Choose your priorities"),
+             textOutput("priorities_info"),
              ## 3.2 Subcategory priority selection table ----
              DTOutput("priorities_table"),
              ## 3.3 (for debug) HTML ----
