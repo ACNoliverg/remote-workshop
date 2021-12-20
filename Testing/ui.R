@@ -68,6 +68,7 @@ ui <- fluidPage(
     tabPanel(
       ## 7.1 Title ----
       titlePanel("Outcomes"),
+      textOutput("outcomes_info"),
       ## 7.2 Load button ----
       actionButton("load_outcomes", "Load results"),
       ## 7.3 Echarts plot ----

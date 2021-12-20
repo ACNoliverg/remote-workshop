@@ -244,6 +244,10 @@ server <- function(input, output, session) {
   
   # 4 Outcomes ----
   ## 4.1 {eventReactive} generate outcomes data ----
+  output$outcomes_info <- renderText({
+    "Click the 'reload' button to get the estimated impact of your selection"
+  })
+  
   outcomes_data <- eventReactive(input$load_outcomes,{
     dat <- 
       initiatives_db
