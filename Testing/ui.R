@@ -61,6 +61,7 @@ ui <- fluidPage(
     tabPanel("Top initiatives",
              ## 6.1 Title ----
              titlePanel("Refine the opportunity"),
+             textOutput("initiatives_info"),
              ## 6.2 DT ----
              DTOutput("opportunities_table")),
     # 7 Outcomes panel ----

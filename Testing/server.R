@@ -185,6 +185,9 @@ server <- function(input, output, session) {
   
   
   # 3 Refinement ----
+  output$initiatives_info <- renderText({
+    "Change the include option to 'no' for any opportunities you wish to exclude"
+  })
   ## 3.1 {Reactive} User relevant subcategories ----
   relevant_subcategories <- reactive({
     priority_and_timeframe_table() |>
