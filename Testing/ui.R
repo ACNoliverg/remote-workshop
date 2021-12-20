@@ -33,9 +33,9 @@ ui <- fluidPage(
              titlePanel("Choose your priorities"),
              textOutput("priorities_info"),
              ## 3.2 Subcategory priority selection table ----
-             DTOutput("priorities_table"),
+             DTOutput("priorities_table")#,
              ## 3.3 (for debug) HTML ----
-             htmlOutput("priority_text")
+             #htmlOutput("priority_text")
     ),
     
     # 4 Timeframe panel ----
@@ -44,9 +44,10 @@ ui <- fluidPage(
              titlePanel("Whats the timeframe?"),
              textOutput("timeframe_info"),
              ## 4.3 DT ----
-             DTOutput("timeframe_table"),
+             DTOutput("timeframe_table")#,
              ## 4.4 (for debug) HTML selection text ----
-             htmlOutput("timeframe_text")),
+             #htmlOutput("timeframe_text")
+             ),
     # 5 Strategy input summary panel ----
     tabPanel("Strategy Outputs",
              ## 5.1 Title ----
