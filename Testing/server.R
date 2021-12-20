@@ -55,10 +55,10 @@ server <- function(input, output, session) {
                       paste0("Priority_",as.character(.x) ),
                       label = NULL,
                       choices = c(
-                        "High priority","Medium priority",
+                        "High priority",
                         "Low priority", "Not a priority"
                       ),
-                      width = "100px"))
+                      width = "80px"))
           )
         
         datatable(
@@ -285,4 +285,6 @@ server <- function(input, output, session) {
       e_show_loading() |>
       e_title("Net outcome")
   })
+  
+  ## observeEvent()
 }
