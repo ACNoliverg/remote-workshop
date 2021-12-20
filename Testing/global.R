@@ -10,14 +10,14 @@ library(googledrive)
 
 #------ Loading data -------
 ambition_descriptions <- 
-  vroom::vroom("data/ambition_descriptions_v2.csv",
+  vroom::vroom("data/ambition_descriptions_v3.csv",
                col_select = c(Ambition, Description, Who, Example))
 get_ambition <-
   function(index) {
     ambition_descriptions$Ambition[index]
   }
 priorities_data <- 
-  vroom::vroom("data/where-to-focus-v3.csv")
+  vroom::vroom("data/where-to-focus-v4.csv")
 # initiatives_db |>
 #   distinct(ESG, Subcategory, Opportunity) -> ops
 # ops |>

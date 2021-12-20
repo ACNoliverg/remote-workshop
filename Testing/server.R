@@ -22,7 +22,9 @@ server <- function(input, output, session) {
         rownames = FALSE,
         options = list(dom = "t")
       )})
-
+  output$performance_info <- renderText({
+    "Click to select the appropriate row"
+  })
   
   ## 1.2 Ambition  ----
   ### 1.2.1 Selection table ----
@@ -33,9 +35,14 @@ server <- function(input, output, session) {
       rownames = FALSE,
       options = list(dom = 't'))
     })
-  
+  output$ambition_info <- renderText({
+    "Click to select the appropriate row"
+  })
   
   ## 1.3 Priorities ----
+  output$priorities_info <- renderText({
+    "Select your priority level for each subcategory (one for each row of the table)"
+  })
   ### 1.3.1 Selection table ----
   output$priorities_table <-
     DT::renderDT(
@@ -79,6 +86,10 @@ server <- function(input, output, session) {
   
   ## 1.4 Timeframe ----
   ### 1.4.1 Selection table ----
+  output$timeframe_info <- renderText({
+    "Select your desired timeframe for each subcategory (one for each row of the table)"
+    
+  })
   output$timeframe_table <-
     DT::renderDT(
       {
@@ -118,10 +129,11 @@ server <- function(input, output, session) {
   })
   
   
-  
-  
   # 2 Strategy outputs ----
   ## 2.1 Users inputs ----
+  output$inputs_tab_info <- renderText({
+    "Confirm that the below inputs are correct"
+  })
   ### 2.1.1 Performance ----
   ##### create reactive ----
   user_performance <- reactive({
@@ -173,6 +185,9 @@ server <- function(input, output, session) {
   
   
   # 3 Refinement ----
+  output$initiatives_info <- renderText({
+    "Change the include option to 'no' for any opportunities you wish to exclude"
+  })
   ## 3.1 {Reactive} User relevant subcategories ----
   relevant_subcategories <- reactive({
     priority_and_timeframe_table() |>
@@ -229,6 +244,10 @@ server <- function(input, output, session) {
   
   # 4 Outcomes ----
   ## 4.1 {eventReactive} generate outcomes data ----
+  output$outcomes_info <- renderText({
+    "Click the 'reload' button to get the estimated impact of your selection"
+  })
+  
   outcomes_data <- eventReactive(input$load_outcomes,{
     dat <- 
       initiatives_db
