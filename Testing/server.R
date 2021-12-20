@@ -22,7 +22,9 @@ server <- function(input, output, session) {
         rownames = FALSE,
         options = list(dom = "t")
       )})
-
+  output$performance_info <- renderText({
+    "Click to select the appropriate row"
+  })
   
   ## 1.2 Ambition  ----
   ### 1.2.1 Selection table ----

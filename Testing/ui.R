@@ -17,6 +17,7 @@ ui <- fluidPage(
     tabPanel(title = "Current Performance",
              ## 1.1 Title ----
              titlePanel("Where do you think you are currently performing?"),
+             textOutput("performance_info"),
              ## 1.2 Current performance selection table ----
              DTOutput("performance_table")),
     # 2 Ambition panel ----
@@ -69,5 +70,5 @@ ui <- fluidPage(
       ## 7.4 DT ----
       DTOutput("dt_out")
     )
-  ),
+  )
 )
