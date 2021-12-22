@@ -8,7 +8,6 @@ server <- function(input, output, session) {
     paste0("Current username is: ",
            username())
   })
-  observe
   output$workshop_info <- renderText({
     welcome_text
   })
