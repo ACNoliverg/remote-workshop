@@ -85,3 +85,24 @@ create_outcomes_body <- function() {
     DTOutput("dt_out")
   )
 }
+create_environment_body <- function() {
+  tagList(
+    titlePanel("Environment"),
+    echarts4rOutput("plot_environment"),
+    DTOutput("dt_environment")
+  )
+}
+create_social_body <- function() {
+  tagList(
+    titlePanel("Social"),
+    echarts4rOutput("plot_social"),
+    DTOutput("dt_social")
+  )
+}
+create_governance_body <- function() {
+  tagList(
+    titlePanel("Governance"),
+    echarts4rOutput("plot_governance"),
+    DTOutput("dt_governance")
+  )
+}

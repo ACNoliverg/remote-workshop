@@ -70,6 +70,18 @@ create_newUI <- function(){
                 outcomes = list(
                   menu = "Outcomes",
                   content = create_outcomes_body()
+                ),
+                environment = list(
+                  menu = "Environment",
+                  content = create_environment_body()
+                ),
+                social = list(
+                  menu = "Social",
+                  content = create_social_body()
+                ),
+                governance = list(
+                  menu = "Governance",
+                  content = create_governance_body()
                 )
               )
             )

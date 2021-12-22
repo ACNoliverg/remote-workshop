@@ -286,5 +286,67 @@ server <- function(input, output, session) {
       e_title("Net outcome")
   })
   
-  ## observeEvent()
+  ## 4.4 environment outcomes plot and dt  ----
+  output$plot_environment <- renderEcharts4r({
+    outcomes_data() |>
+      filter(ESG == "Environmental") |>
+      group_by(Year) |>
+      summarise(cost = sum(cost),
+                value = sum(value),
+                net = sum(net)) |>
+      e_charts(Year) |>
+      e_line(cost) |>
+      e_line(value) |>
+      e_line(net) |>
+      e_show_loading() |>
+      e_title("Environmental breakdown")
+  })
+  output$dt_environment <- renderDT({
+    outcomes_data() |>
+      filter(ESG == "Environmental") |>
+      datatable()
+  })
+  
+  ## 4.5 social outcomes plot and dt ----
+  output$plot_social <- renderEcharts4r({
+    outcomes_data() |>
+      filter(ESG == "Social") |>
+      group_by(Year) |>
+      summarise(cost = sum(cost),
+                value = sum(value),
+                net = sum(net)) |>
+      e_charts(Year) |>
+      e_line(cost) |>
+      e_line(value) |>
+      e_line(net) |>
+      e_show_loading() |>
+      e_title("Social breakdown")
+  })
+  output$dt_social <- renderDT({
+    outcomes_data() |>
+      filter(ESG == "Social") |>
+      datatable()
+  })
+  
+  ## 4.6 governance outcomes plot and dt ----
+  output$plot_governance <- renderEcharts4r({
+    outcomes_data() |>
+      filter(ESG == "Governance") |>
+      group_by(Year) |>
+      summarise(cost = sum(cost),
+                value = sum(value),
+                net = sum(net)) |>
+      e_charts(Year) |>
+      e_line(cost) |>
+      e_line(value) |>
+      e_line(net) |>
+      e_show_loading() |>
+      e_title("Governance breakdown")
+  })
+  output$dt_governance <- renderDT({
+    outcomes_data() |>
+      filter(ESG == "Governance") |>
+      datatable()
+  })
+  
 }
