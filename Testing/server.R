@@ -1,13 +1,14 @@
 server <- function(input, output, session) {
   
   # 0 Landing page ----
-  username <- reactive({
-    input$username
+  username <- eventReactive(input$submit_username, {
+    isolate(input$username)
   })
   output$current_username <- renderText({
     paste0("Current username is: ",
            username())
   })
+  observe
   output$workshop_info <- renderText({
     welcome_text
   })

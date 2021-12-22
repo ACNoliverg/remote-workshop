@@ -3,7 +3,8 @@ create_welcome_body <- function(){
     sidebarLayout(
       sidebarPanel(
         textInput("username", "Enter your name"),
-        textOutput("current_username")
+        textOutput("current_username"),
+        actionButton("submit_username", "Submit name")
       ),
       mainPanel(
         textOutput("workshop_info")
