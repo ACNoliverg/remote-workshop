@@ -304,6 +304,7 @@ server <- function(input, output, session) {
   output$dt_environment <- renderDT({
     outcomes_data() |>
       filter(ESG == "Environmental") |>
+      create_subcategoryDT() |>
       datatable()
   })
   
@@ -325,6 +326,7 @@ server <- function(input, output, session) {
   output$dt_social <- renderDT({
     outcomes_data() |>
       filter(ESG == "Social") |>
+      create_subcategoryDT() |>
       datatable()
   })
   
@@ -346,6 +348,7 @@ server <- function(input, output, session) {
   output$dt_governance <- renderDT({
     outcomes_data() |>
       filter(ESG == "Governance") |>
+      create_subcategoryDT() |>
       datatable()
   })
   
