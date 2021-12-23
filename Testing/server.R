@@ -187,11 +187,19 @@ server <- function(input, output, session) {
       priorityAndTimeframe = priority_and_timeframe_table()
     )
     strategy_list |>
-      saveRDS(file = paste0(username(), "_strategy.Rdata"))
+      saveRDS(file = paste0(getwd(),
+                            "/data/inputs/",
+                            username(), 
+                            "_strategy.Rdata"))
   })
   ## 2.2 Group inputs ----
-  
-  
+  datafiles <- reactive({
+    list.files(paste0(getwd(),"/data/inputs/"))
+  })
+  output$files_list <- renderText({
+    datafiles() |>
+      paste(sep = "\n")
+  })
   # 3 Refinement ----
   output$initiatives_info <- renderText({
     "Change the include option to 'no' for any opportunities you wish to exclude"

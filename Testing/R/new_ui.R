@@ -90,7 +90,9 @@ create_newUI <- function(){
       tabItem(
         tabName = "combined_outputs",
         box(width = 16,
-            h1("Next"))
+            h1("Next"),
+            actionButton("check_files", "Check files"),
+            verbatimTextOutput("files_list"))
       )
     )
   )
