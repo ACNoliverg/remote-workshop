@@ -180,7 +180,15 @@ server <- function(input, output, session) {
   ### 2.1.4 Produce output chart ----
   
   ### 2.1.5 Submit to database ----
-  
+  observeEvent(input$confirm_strategy, {
+    strategy_list <- list(
+      performance = user_performance(),
+      ambition = user_ambition(),
+      priorityAndTimeframe = priority_and_timeframe_table()
+    )
+    strategy_list |>
+      saveRDS(file = paste0(username(), "_strategy.Rdata"))
+  })
   ## 2.2 Group inputs ----
   
   
